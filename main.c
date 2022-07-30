@@ -55,6 +55,8 @@ void insertAtPosition(int num,int pos){
     newNode=(struct Node*)malloc(sizeof(struct Node));
     newNode->data=num;
     if(pos==1){
+        if(head==NULL)
+            head=tail=newNode;
         newNode->next=head;
         newNode->prev=tail;
         tail->next=newNode;
@@ -87,6 +89,19 @@ void insertAfterNode(struct Node *pos,int num){
     newNode->next=afterNode;
     pos->next=newNode;
     afterNode->prev=newNode;
+}
+
+
+//Inserting node before a given node
+void insertBeforeNode(struct Node *pos,int num){
+    struct Node *newNode;
+    newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=num;
+    struct Node *prevNode=pos->prev;
+    newNode->next=pos;
+    newNode->prev=prevNode;
+    prevNode->next=newNode;
+    pos->prev=newNode;
 }
 
 
@@ -135,7 +150,7 @@ void deleteNodeAt(int pos){
             head=tail=NULL;
         printf("%d is deleted successfully\n",x);
     }
-    else if(delNode==tail){
+    else if(pos==getLength()){
         int len=getLength();
         delNode=tail;
         int x=delNode->data;
@@ -174,7 +189,7 @@ void displayForward(){
         printf("%d->",temp->data);
         temp=temp->next;
     }while(temp!=head);
-    printf("NULL\n");
+    printf("<\n");
 }
 
 
@@ -185,7 +200,7 @@ void displayBackward(){
         printf("%d->",temp->data);
         temp=temp->prev;
     }while(temp!=tail);
-    printf("NULL\n");
+    printf("<\n");
 }
 
 
